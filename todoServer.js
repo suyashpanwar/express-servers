@@ -11,10 +11,8 @@ function findIndex(arr, id){
         if(arr[i].id===id){
             return i
         }
-        else{
-            return -1
-        }
     }
+    return -1;
 }
 
 function removeAtIndex(arr, index){
@@ -41,16 +39,16 @@ app.post('/todos', (req,res)=>{
     res.status(201).json(newTodo)
 })
 
-app.delete('/todos/:id', (req,res)=>{
-    const ind = findIndex(todos, parseInt(req.params.id))
-    if(ind === -1){
-        res.status(404).send();
-    }
-    else{
-        todos = removeAtIndex(todos, ind);
-        res.status(200).send()
-    }
-})
+    app.delete('/todos/:id', (req,res)=>{
+        const ind = findIndex(todos, parseInt(req.params.id))
+        if(ind === -1){
+            res.status(404).send();
+        }
+        else{
+            todos = removeAtIndex(todos, ind);
+            res.status(200).send()
+        }
+    })
 
 app.use((req,res,next)=>{
     res.status(404).send()
