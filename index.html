@@ -7,8 +7,70 @@
 </head>
 <script>
 
+
+    function callback3(resp){
+        console.log("delete done")
+    }
+    function deleteTodo(id){
+        fetch("http://localhost:3000/todos/" + id, {
+            method : "DELETE",
+        }).then(callback3)
+    }
+    function todosCallBack(data){
+        var parentElement = document.getElementById("mainArea")
+        // parentElement.innerHTML = JSON.stringify(data)
+        for(let i=0;i<data.length;i++){
+            var childElement = document.createElement("div")
+            var grandChildElement = document.createElement("span")
+            grandChildElement.innerHTML = data[i].title
+
+            var grandChildElement1 = document.createElement("span")
+            grandChildElement1.innerHTML = data[i].description
+
+            var grandChildElement2 = document.createElement("button")
+            grandChildElement2.innerHTML = "delete"
+            grandChildElement2.setAttribute("onclick", "deleteTodo("+ data[i].id + ")")
+            
+            childElement.append(grandChildElement)
+            childElement.append(grandChildElement1)
+            childElement.append(grandChildElement2)
+
+            parentElement.appendChild(childElement)
+        }
+    }
+
+    
+
+    function callback2(resp){
+        resp.json().then(todosCallBack)
+    }
+
+    function getData(){
+        fetch("http://localhost:3000/todos", {
+            method : "GET",
+        }).then(callback2)
+    }
+
     function parsedResponse(data){
-        console.log(data)
+        // console.log(data)
+        var parentElement = document.getElementById("mainArea")
+
+        var childElement = document.createElement("div")
+
+        var grandChildElement = document.createElement("span")
+        grandChildElement.innerHTML = data.title
+
+        var grandChildElement1 = document.createElement("span")
+        grandChildElement1.innerHTML = data.description
+
+        var grandChildElement2 = document.createElement("button")
+        grandChildElement2.innerHTML = "delete"
+        
+        childElement.append(grandChildElement)
+        childElement.append(grandChildElement1)
+        childElement.append(grandChildElement2)
+
+        parentElement.appendChild(childElement)
     }
 
     function callback(resp){
@@ -40,7 +102,9 @@
     <input type="text" id="inputDescription">
     <br><br>
     <button onclick="onPress()">Create todo</button>
-    <div>
+    <br><br>
+    <button onclick="getData()">Get Todos</button>
+    <div id="mainArea">
         
     </div>
 </body>

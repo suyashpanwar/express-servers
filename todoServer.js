@@ -40,16 +40,16 @@ app.post('/todos', (req,res)=>{
     res.status(201).json(newTodo)
 })
 
-    app.delete('/todos/:id', (req,res)=>{
-        const ind = findIndex(todos, parseInt(req.params.id))
-        if(ind === -1){
-            res.status(404).send();
-        }
-        else{
-            todos = removeAtIndex(todos, ind);
-            res.status(200).send()
-        }
-    })
+app.delete('/todos/:id', (req,res)=>{
+    const ind = findIndex(todos, parseInt(req.params.id))
+    if(ind === -1){
+        res.status(404).send();
+    }
+    else{
+        todos = removeAtIndex(todos, ind);
+        res.status(200).send()
+    }
+})
 
 app.get("/", (req,res)=>{
     res.sendFile(path.join(__dirname, "index.html"))
